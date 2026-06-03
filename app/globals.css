@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-olive: #3D4A3E;
+  --color-warm:  #BC6C5A;
+  --color-bone:  #FDFCFB;
+  --color-clay:  #F4EFEC;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #FDFCFB;
+  color: #3D4A3E;
+}
+
+::selection {
+  background-color: #3D4A3E;
+  color: #FDFCFB;
+}
+
+/* Remove default button styles */
+button {
+  cursor: pointer;
+}
+
+/* Focus visible only */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid #3D4A3E;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
