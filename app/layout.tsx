@@ -37,7 +37,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${dmSans.variable} ${dmSerif.variable}`}>
-      <body className="font-sans bg-bone text-olive antialiased">
+      <body className="font-sans bg-bone text-olive antialiased selection:bg-warm/20">
         <Nav />
         <main>{children}</main>
         <Footer />

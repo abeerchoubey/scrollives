@@ -14,9 +14,9 @@ interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'variant'> {
 }
 
 const variantClasses: Record<Variant, string> = {
-  primary:   'bg-olive text-bone border border-olive hover:bg-olive-500',
+  primary:   'bg-olive text-bone border border-olive hover:bg-olive-500 shadow-soft hover:shadow-card-hover',
   secondary: 'bg-transparent text-olive border border-olive hover:bg-olive hover:text-bone',
-  warm:      'bg-warm text-bone border border-warm hover:bg-warm-500',
+  warm:      'bg-warm text-bone border border-warm hover:bg-warm-500 shadow-soft hover:shadow-card-hover',
   ghost:     'bg-transparent text-olive border border-transparent hover:bg-clay',
 }
 
@@ -27,7 +27,7 @@ const sizeClasses: Record<Size, string> = {
 }
 
 export default function Button({
-  variant  = 'primary',
+  variant  = 'warm',
   size     = 'md',
   loading  = false,
   disabled,
@@ -39,14 +39,14 @@ export default function Button({
 
   return (
     <motion.button
-      whileHover={!isDisabled ? { scale: 1.02 } : {}}
+      whileHover={!isDisabled ? { scale: 1.02, y: -1 } : {}}
       whileTap={!isDisabled  ? { scale: 0.98 } : {}}
-      transition={{ duration: 0.15 }}
+      transition={{ duration: 0.2 }}
       disabled={isDisabled}
       className={[
         'inline-flex items-center justify-center gap-2',
-        'rounded-lg font-sans font-medium tracking-tight',
-        'transition-colors duration-200',
+        'rounded-xl font-sans font-medium tracking-tight',
+        'transition-all duration-300',
         variantClasses[variant],
         sizeClasses[size],
         isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer',

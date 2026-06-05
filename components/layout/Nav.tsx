@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
@@ -33,9 +34,9 @@ export default function Nav() {
       <header
         className={[
           'fixed top-0 left-0 right-0 z-50',
-          'transition-all duration-300',
+          'transition-all duration-500',
           scrolled
-            ? 'bg-bone/80 backdrop-blur-md border-b border-olive/8 shadow-sm'
+            ? 'bg-bone/85 backdrop-blur-lg border-b border-olive/6 shadow-soft'
             : 'bg-transparent',
         ].join(' ')}
       >
@@ -43,9 +44,20 @@ export default function Nav() {
           {/* Logo */}
           <Link
             href="/"
-            className="font-serif text-xl text-olive tracking-tight transition-opacity hover:opacity-70"
+            className="flex items-center gap-2.5 group"
           >
-            ScrollLives
+            <div className="relative w-8 h-8 rounded-lg overflow-hidden shadow-soft group-hover:shadow-medium transition-shadow duration-300">
+              <Image
+                src="/scrollives.jpeg"
+                alt="ScrollLives logo"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+            <span className="font-serif text-xl text-olive tracking-tight transition-colors duration-300 group-hover:text-warm">
+              ScrollLives
+            </span>
           </Link>
 
           {/* Desktop links */}
@@ -58,17 +70,17 @@ export default function Nav() {
                   href={link.href}
                   className={[
                     'relative px-3 py-1.5 text-sm font-medium rounded-md',
-                    'transition-colors duration-200',
+                    'transition-colors duration-300',
                     active
                       ? 'text-olive'
-                      : 'text-olive/60 hover:text-olive hover:bg-olive/5',
+                      : 'text-olive/55 hover:text-olive hover:bg-olive/5',
                   ].join(' ')}
                 >
                   {active && (
                     <motion.span
                       layoutId="nav-indicator"
-                      className="absolute inset-0 rounded-md bg-olive/8"
-                      transition={{ type: 'spring', stiffness: 400, damping: 40 }}
+                      className="absolute inset-0 rounded-md bg-olive/6"
+                      transition={{ type: 'spring', stiffness: 500, damping: 40 }}
                     />
                   )}
                   <span className="relative">{link.label}</span>
@@ -77,8 +89,8 @@ export default function Nav() {
             })}
             <Link
               href="/join"
-              className="ml-3 px-4 py-2 rounded-lg bg-olive text-bone text-sm font-medium
-                         transition-all duration-200 hover:bg-olive-500"
+              className="ml-3 px-5 py-2 rounded-lg bg-warm text-bone text-sm font-medium
+                         transition-all duration-300 hover:bg-warm-500 shadow-soft hover:shadow-medium"
             >
               Join now
             </Link>
@@ -88,7 +100,7 @@ export default function Nav() {
           <button
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
-            className="md:hidden p-2 rounded-lg text-olive hover:bg-olive/8 transition-colors"
+            className="md:hidden p-2 rounded-lg text-olive hover:bg-olive/6 transition-colors"
           >
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -103,31 +115,50 @@ export default function Nav() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-bone/95 backdrop-blur-md md:hidden"
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-40 bg-bone/97 backdrop-blur-xl md:hidden"
           >
             <motion.div
-              initial={{ opacity: 0, y: -16 }}
+              initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col items-center justify-center h-full gap-2"
             >
+              {/* Logo in mobile menu */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.1, duration: 0.4 }}
+                className="mb-8 flex items-center gap-3"
+              >
+                <div className="relative w-12 h-12 rounded-xl overflow-hidden shadow-medium">
+                  <Image
+                    src="/scrollives.jpeg"
+                    alt="ScrollLives logo"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+                <span className="font-serif text-2xl text-olive">ScrollLives</span>
+              </motion.div>
+
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.href}
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0  }}
-                  transition={{ delay: i * 0.06, duration: 0.3 }}
+                  transition={{ delay: i * 0.06 + 0.15, duration: 0.4 }}
                 >
                   <Link
                     href={link.href}
                     className={[
                       'block px-8 py-3 text-2xl font-serif tracking-tight',
-                      'transition-opacity duration-200',
+                      'transition-colors duration-300',
                       pathname === link.href
-                        ? 'text-olive'
-                        : 'text-olive/50 hover:text-olive',
+                        ? 'text-warm'
+                        : 'text-olive/45 hover:text-olive',
                     ].join(' ')}
                   >
                     {link.label}
@@ -135,15 +166,15 @@ export default function Nav() {
                 </motion.div>
               ))}
               <motion.div
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0  }}
-                transition={{ delay: navLinks.length * 0.06 + 0.1, duration: 0.3 }}
+                transition={{ delay: navLinks.length * 0.06 + 0.2, duration: 0.4 }}
                 className="mt-6"
               >
                 <Link
                   href="/join"
-                  className="px-8 py-3 rounded-xl bg-olive text-bone text-lg font-medium
-                             transition-all hover:bg-olive-500"
+                  className="px-10 py-3.5 rounded-xl bg-warm text-bone text-lg font-medium
+                             transition-all hover:bg-warm-500 shadow-soft"
                 >
                   Join now
                 </Link>
